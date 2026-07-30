@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>KOPDES HOROR TAKENGON</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen" class="screen active">
+  <div class="glitch-container">
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="loading-content">
+      <div class="glitch-title" data-text="KOPDES HOROR">KOPDES HOROR</div>
+      <div class="glitch-subtitle" data-text="TAKENGON">TAKENGON</div>
+      <div class="loading-bar-wrap">
+        <div class="loading-bar" id="loading-bar"></div>
+      </div>
+      <div class="loading-text" id="loading-text">MEMUAT....jangan keluar woi..</div>
+      <div class="loading-percent" id="loading-percent">0%</div>
+    </div>
+    <div class="corrupted-text" id="corrupted-text"></div>
+    <div class="vhs-overlay"></div>
+  </div>
+</div>
+
+<!-- HOME SCREEN -->
+<div id="home-screen" class="screen">
+  <div class="glitch-container">
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="vhs-overlay"></div>
+    <div class="home-content">
+      <div class="home-eye-container">
+        <div class="eye-bg"></div>
+      </div>
+      <div class="home-title glitch-title-big" data-text="KOPDES HOROR">KOPDES HOROR</div>
+      <div class="home-subtitle" data-text="TAKENGON">TAKENGON</div>
+      <div class="home-tagline">[ BEWARE OF KOPDES ARMY ]</div>
+      <div class="menu-container">
+        <button class="menu-btn glitch-btn" id="btn-play" data-text="▶ MULAI GAME">▶ START GAME</button>
+        <button class="menu-btn glitch-btn" id="btn-howto" data-text="? CARA BERMAIN">? How To Play</button>
+        <button class="menu-btn glitch-btn" id="btn-credits" data-text="✦ KREDIT">✦ Credits</button>
+      </div>
+      <div class="home-footer">&copy;Fata-ID | itch.io release | Takengon_Aceh 2026 | warga skema</div>
+    </div>
+    <div class="corrupted-text" id="corrupted-text-home"></div>
+  </div>
+</div>
+
+<!-- HOW TO PLAY SCREEN -->
+<div id="howto-screen" class="screen">
+  <div class="glitch-container">
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="vhs-overlay"></div>
+    <div class="overlay-content">
+      <div class="overlay-title glitch-title" data-text="CARA BERMAIN">How To Play</div>
+      <div class="howto-grid">
+        <div class="howto-section">
+          <div class="howto-icon">🗝</div>
+          <div class="howto-label">MISI</div>
+          <div class="howto-desc">FIND <span class="highlight">3 KEYS</span> HIDDEN in ****** find it to  <span class="highlight">EXIT</span>.</div>
+        </div>
+        <div class="howto-section">
+          <div class="howto-icon">👁</div>
+          <div class="howto-label">BAHAYA WOK</div>
+          <div class="howto-desc">Army <span class="highlight">Following YOU</span>. If he find you, Its END.........</div>
+        </div>
+        <div class="howto-section">
+          <div class="howto-icon">🗺</div>
+          <div class="howto-label">MINIMAP</div>
+          <div class="howto-desc">Use it to find your way</div>
+        </div>
+      </div>
+      <div class="controls-section">
+        <div class="controls-title">[ PC CONTROL ]</div>
+        <div class="controls-grid">
+          <div class="ctrl"><span class="key">W A S D</span><span class="ctrl-desc">Move</span></div>
+          <div class="ctrl"><span class="key">MOUSE</span><span class="ctrl-desc">Look around</span></div>
+          <div class="ctrl"><span class="key">SHIFT</span><span class="ctrl-desc">Run</span></div>
+          <div class="ctrl"><span class="key">E</span><span class="ctrl-desc">Take/Interract</span></div>
+          <div class="ctrl"><span class="key">ESC</span><span class="ctrl-desc">Pause</span></div>
+        </div>
+        <div class="controls-title" style="margin-top:16px">[ MOBILE CONTROL ]</div>
+        <div class="controls-grid">
+          <div class="ctrl"><span class="key">🕹</span><span class="ctrl-desc">Joystick Left = walk</span></div>
+          <div class="ctrl"><span class="key">👆</span><span class="ctrl-desc">touch = Look around</span></div>
+          <div class="ctrl"><span class="key">RUN</span><span class="ctrl-desc">Run Button</span></div>
+          <div class="ctrl"><span class="key">⚡</span><span class="ctrl-desc">Action button/interract</span></div>
+        </div>
+      </div>
+      <button class="menu-btn glitch-btn back-btn" id="btn-back-howto">← BACK</button>
+    </div>
+  </div>
+</div>
+
+<!-- CREDITS SCREEN -->
+<div id="credits-screen" class="screen">
+  <div class="glitch-container">
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="vhs-overlay"></div>
+    <div class="overlay-content">
+      <div class="overlay-title glitch-title" data-text="KREDIT">CREDITS</div>
+      <div class="credits-list">
+        <div class="credit-item">
+          <div class="credit-role">GAME DESIGNER</div>
+          <div class="credit-name">IfdhilFata</div>
+        </div>
+        <div class="credit-item">
+          <div class="credit-role">PROGRAMMER</div>
+          <div class="credit-name">Ifdhil Fata</div>
+        </div>
+        <div class="credit-item">
+          <div class="credit-role">Github</div>
+          <div class="credit-name">Fata-X</div>
+        </div>
+        <div class="credit-item">
+          <div class="credit-role">ENGINE</div>
+          <div class="credit-name">THREE.JS + WebGL</div>
+        </div>
+        <div class="credit-item">
+          <div class="credit-role">THANKS TO</div>
+          <div class="credit-name">The Backrooms · Garrys Mod Nextbot · SCP Foundation · LENSAN (game menu backsound)</div>
+        </div>
+        <div class="credit-item">
+          <div class="credit-role">PLATFORM</div>
+          <div class="credit-name">itch.io</div>
+        </div>
+        <div class="credit-item">
+          <div class="credit-role">CAUTION</div>
+          <div class="credit-name credit-warn">THIS GAME CONTAIN DISTURBING CONTENT AND HOROR GRAPICS, USE HEADPHONE FOR BETTER EXPERIENCE....</div>
+        </div>
+        <div class="credit-item">
+          <div class="credit-role">Made in</div>
+          <div class="credit-name">Takengon, Central Aceh — 2026</div>
+        </div>
+      </div>
+      <div class="credits-easter">_you should not read this_</div>
+      <button class="menu-btn glitch-btn back-btn" id="btn-back-credits">← Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div id="game-screen" class="screen">
+  <canvas id="game-canvas"></canvas>
+
+  <!-- HUD -->
+  <div id="hud">
+    <div id="hud-keys">
+      <div class="hud-label">KEYS</div>
+      <div id="key-indicators">
+        <div class="key-slot" id="key0">🗝</div>
+        <div class="key-slot" id="key1">🗝</div>
+        <div class="key-slot" id="key2">🗝</div>
+      </div>
+    </div>
+    <div id="hud-status">
+      <div id="stamina-bar-wrap">
+        <div class="hud-label">STAMINA</div>
+        <div id="stamina-bar"><div id="stamina-fill"></div></div>
+      </div>
+    </div>
+    <div id="hud-sanity">
+      <div class="hud-label">SANITY</div>
+      <div id="sanity-bar"><div id="sanity-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- MINIMAP -->
+  <div id="minimap-container">
+    <canvas id="minimap-canvas" width="160" height="160"></canvas>
+    <div class="minimap-label">MAP</div>
+  </div>
+
+  <!-- CENTER CROSSHAIR (hidden on mobile) -->
+  <div id="crosshair">+</div>
+
+  <!-- INTERACTION PROMPT -->
+  <div id="interact-prompt" class="hidden">[E] TAKE</div>
+
+  <!-- GHOST PROXIMITY WARNING -->
+  <div id="ghost-warning" class="hidden">
+    <div class="warning-text">⚠ Be CaRefULl ⚠</div>
+  </div>
+
+  <!-- HORROR FX -->
+  <div id="vignette"></div>
+  <div id="red-flash" class="hidden"></div>
+  <div id="scanlines-game" class="scanlines"></div>
+
+  <!-- MOBILE TOUCH CONTROLS (shown only on mobile) -->
+  <div id="touch-controls" style="display:none">
+    <!-- Left joystick area -->
+    <div id="joystick-area">
+      <div id="joystick-base"></div>
+      <div id="joystick-knob"></div>
+    </div>
+    <!-- Right swipe area for looking -->
+    <div id="look-area"></div>
+    <!-- Action buttons -->
+    <button id="btn-run-mobile" class="mobile-btn">RUN</button>
+    <button id="btn-interact-mobile" class="mobile-btn mobile-btn-action">⚡</button>
+    <!-- Pause button -->
+    <button id="btn-pause-mobile" class="mobile-btn mobile-btn-pause">⏸</button>
+  </div>
+
+  <!-- PAUSE MENU -->
+  <div id="pause-menu" class="hidden">
+    <div class="pause-content">
+      <div class="pause-title glitch-title" data-text="PAUSE">PAUSE</div>
+      <button class="menu-btn glitch-btn" id="btn-resume">▶ RESUME</button>
+      <button class="menu-btn glitch-btn" id="btn-quit">✕ EXIT TO MENU</button>
+    </div>
+  </div>
+
+  <!-- CAUGHT SCREEN -->
+  <div id="caught-screen" class="hidden">
+    <div class="endgame-content">
+      <div class="endgame-title blood-title" id="death-title">YOU JUST GET KILL*D</div>
+      <div class="endgame-msg" id="death-msg">HE TORTURING YOU</div>
+      <button class="menu-btn glitch-btn" id="btn-retry">↺ TRY AGAIN-666</button>
+      <button class="menu-btn glitch-btn" id="btn-quit-death">✕ MAIN MENU</button>
+    </div>
+  </div>
+
+  <!-- WIN SCREEN -->
+  <div id="win-screen" class="hidden">
+    <div class="endgame-content win-content">
+      <div class="endgame-title win-title">YOUR SAFE? HUH.... just watch your dih</div>
+      <div class="endgame-msg">...Or that what you thinks.</div>
+      <div class="endgame-msg small">Congratulation you just escaped from Kopdes Horor Takengon.</div>
+      <button class="menu-btn glitch-btn" id="btn-retry-win">↺ PLAY AGAIN</button>
+      <button class="menu-btn glitch-btn" id="btn-quit-win">✕ MAIN MENU</button>
+    </div>
+  </div>
+
+  <!-- POINTER LOCK OVERLAY (desktop only) -->
+  <div id="pointer-lock-overlay" class="hidden">
+    <div class="pointer-content">
+      <div class="pointer-title">ClIcK tO PlAy | TeKAN uNTuk BerMain</div>
+      <div class="pointer-sub">use mouse or swipe to look around</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/maze.js"></script>
+<script src="js/ghost.js"></script>
+<script src="js/minimap.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/game.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

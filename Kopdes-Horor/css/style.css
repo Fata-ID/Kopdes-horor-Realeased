@@ -1,0 +1,899 @@
+/* =============================================
+   KOPDES HOROR TAKENGON — STYLESHEET
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oswald:wght@700&display=swap');
+
+:root {
+  --red: #ff0022;
+  --dark-red: #8b0000;
+  --bg: #050505;
+  --panel: #0a0a0a;
+  --text: #c8c8c8;
+  --bright: #ffffff;
+  --warn: #ff6600;
+  --green: #00ff41;
+  --glitch1: #ff0090;
+  --glitch2: #00ffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--text);
+  cursor: default;
+}
+
+/* Hide cursor only when inside the game canvas / game screen while pointer is locked */
+#game-screen.pointer-locked {
+  cursor: none;
+}
+#game-screen.pointer-locked * {
+  cursor: none;
+}
+
+/* ============ SCREENS ============ */
+.screen {
+  position: fixed; inset: 0;
+  display: none;
+  z-index: 10;
+}
+.screen.active { display: flex; align-items: center; justify-content: center; }
+
+/* ============ GLITCH CONTAINER ============ */
+.glitch-container {
+  position: relative; width: 100%; height: 100%;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+/* SCANLINES */
+.scanlines {
+  position: absolute; inset: 0; pointer-events: none; z-index: 50;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.15) 2px,
+    rgba(0,0,0,0.15) 4px
+  );
+  animation: scanline-roll 8s linear infinite;
+}
+@keyframes scanline-roll {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100px; }
+}
+
+/* NOISE */
+.noise {
+  position: absolute; inset: 0; pointer-events: none; z-index: 49;
+  opacity: 0.04;
+  animation: noise-anim 0.15s steps(1) infinite;
+}
+.noise::before {
+  content: '';
+  position: absolute; inset: -50%;
+  width: 200%; height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+}
+@keyframes noise-anim {
+  0%,100% { transform: translate(0,0); }
+  10% { transform: translate(-2%,-3%); }
+  20% { transform: translate(2%,3%); }
+  30% { transform: translate(-3%,2%); }
+  40% { transform: translate(3%,-2%); }
+  50% { transform: translate(-1%,4%); }
+  60% { transform: translate(1%,-4%); }
+  70% { transform: translate(-4%,1%); }
+  80% { transform: translate(4%,-1%); }
+  90% { transform: translate(-2%,2%); }
+}
+
+/* VHS */
+.vhs-overlay {
+  position: absolute; inset: 0; pointer-events: none; z-index: 48;
+  background: linear-gradient(
+    to bottom,
+    transparent 90%,
+    rgba(255,0,34,0.03) 95%,
+    transparent 100%
+  );
+  animation: vhs-roll 4s linear infinite;
+}
+@keyframes vhs-roll {
+  0% { background-position: 0 -100%; }
+  100% { background-position: 0 200%; }
+}
+
+/* CORRUPTED TEXT */
+.corrupted-text {
+  position: absolute; bottom: 30px; left: 20px;
+  font-size: 9px; color: rgba(255,0,34,0.3);
+  z-index: 60; line-height: 1.6;
+  text-transform: uppercase; letter-spacing: 2px;
+  pointer-events: none;
+}
+
+/* ============ LOADING SCREEN ============ */
+.loading-content {
+  text-align: center; z-index: 10; position: relative;
+  padding: 40px;
+}
+
+.glitch-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 700;
+  color: var(--bright);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  position: relative;
+  animation: glitch-main 3s infinite;
+}
+.glitch-title::before,
+.glitch-title::after {
+  content: attr(data-text);
+  position: absolute; inset: 0;
+  background: var(--bg);
+}
+.glitch-title::before {
+  color: var(--glitch1);
+  animation: glitch-1 3s infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+}
+.glitch-title::after {
+  color: var(--glitch2);
+  animation: glitch-2 3s infinite;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+}
+
+.glitch-subtitle {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1.2rem, 4vw, 2.5rem);
+  color: var(--red);
+  letter-spacing: 0.6em;
+  margin-top: -10px;
+  text-transform: uppercase;
+  animation: flicker 2s infinite;
+}
+
+@keyframes glitch-main {
+  0%,90%,100% { transform: none; }
+  91% { transform: skew(-0.5deg); }
+  92% { transform: skew(0.5deg); }
+  93% { transform: none; }
+}
+@keyframes glitch-1 {
+  0%,85%,100% { transform: none; opacity: 0; }
+  86% { transform: translate(-3px, 1px); opacity: 0.8; }
+  87% { transform: translate(3px, -1px); opacity: 0.8; }
+  88% { transform: none; opacity: 0; }
+}
+@keyframes glitch-2 {
+  0%,89%,100% { transform: none; opacity: 0; }
+  90% { transform: translate(3px, -2px); opacity: 0.7; }
+  91% { transform: translate(-3px, 2px); opacity: 0.7; }
+  92% { transform: none; opacity: 0; }
+}
+@keyframes flicker {
+  0%,100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.2; }
+  94% { opacity: 1; }
+  97% { opacity: 1; }
+  98% { opacity: 0; }
+  99% { opacity: 1; }
+}
+
+.loading-bar-wrap {
+  width: 320px; height: 4px;
+  background: #1a0000;
+  margin: 40px auto 16px;
+  position: relative;
+  border: 1px solid rgba(255,0,34,0.3);
+}
+.loading-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--dark-red), var(--red), #ff6666);
+  transition: width 0.1s;
+  box-shadow: 0 0 8px var(--red);
+}
+.loading-text {
+  font-size: 0.75rem;
+  color: var(--warn);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  animation: flicker 1.5s infinite;
+}
+.loading-percent {
+  font-size: 2rem;
+  color: var(--red);
+  margin-top: 8px;
+  font-family: 'Oswald', sans-serif;
+  text-shadow: 0 0 20px var(--red);
+}
+
+/* ============ HOME SCREEN ============ */
+.home-content {
+  text-align: center; z-index: 10; position: relative;
+  padding: 40px;
+}
+
+.home-eye-container {
+  width: 80px; height: 80px;
+  margin: 0 auto 20px;
+  position: relative;
+}
+.eye-bg {
+  width: 80px; height: 40px;
+  border-radius: 50%;
+  background: #000;
+  border: 2px solid var(--red);
+  position: relative;
+  box-shadow: 0 0 20px var(--red), inset 0 0 10px #000;
+  animation: eye-blink 4s infinite;
+}
+.eye-bg::after {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  background: radial-gradient(circle, #ff0 0%, var(--red) 40%, #000 70%);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: eye-move 6s ease-in-out infinite;
+  box-shadow: 0 0 10px var(--red);
+}
+@keyframes eye-blink {
+  0%,95%,100% { transform: scaleY(1); }
+  97% { transform: scaleY(0.05); }
+}
+@keyframes eye-move {
+  0%,100% { transform: translate(-50%,-50%); }
+  25% { transform: translate(-70%,-50%); }
+  50% { transform: translate(-50%,-50%); }
+  75% { transform: translate(-30%,-50%); }
+}
+
+.home-title.glitch-title-big {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(3rem, 10vw, 7rem);
+  font-weight: 700;
+  color: var(--bright);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  position: relative;
+  text-shadow: 3px 3px 0 var(--dark-red);
+  animation: glitch-main 2s infinite;
+}
+.home-title.glitch-title-big::before,
+.home-title.glitch-title-big::after {
+  content: attr(data-text);
+  position: absolute; inset: 0;
+  background: var(--bg);
+}
+.home-title.glitch-title-big::before {
+  color: var(--glitch1);
+  animation: glitch-1 2s infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+}
+.home-title.glitch-title-big::after {
+  color: var(--glitch2);
+  animation: glitch-2 2s infinite;
+  clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%);
+}
+
+.home-subtitle {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  color: var(--red);
+  letter-spacing: 1em;
+  text-transform: uppercase;
+  margin-top: -5px;
+  margin-bottom: 8px;
+  animation: flicker 3s infinite;
+  text-shadow: 0 0 15px var(--red);
+}
+.home-tagline {
+  font-size: 0.7rem;
+  color: rgba(200,200,200,0.4);
+  letter-spacing: 0.3em;
+  margin-bottom: 50px;
+  animation: flicker 5s infinite;
+}
+
+.menu-container {
+  display: flex; flex-direction: column; gap: 16px;
+  align-items: center;
+}
+
+.menu-btn {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1rem;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid rgba(255,0,34,0.4);
+  padding: 14px 48px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  min-width: 260px;
+  position: relative;
+  transition: all 0.15s;
+  outline: none;
+}
+.menu-btn:hover {
+  color: var(--bright);
+  border-color: var(--red);
+  background: rgba(255,0,34,0.08);
+  text-shadow: 0 0 10px var(--red);
+  box-shadow: 0 0 20px rgba(255,0,34,0.2), inset 0 0 10px rgba(255,0,34,0.05);
+  animation: btn-glitch 0.3s infinite;
+}
+@keyframes btn-glitch {
+  0%,100% { transform: none; }
+  20% { transform: translate(-1px, 0) skew(-0.3deg); }
+  40% { transform: translate(1px, 0) skew(0.3deg); }
+  60% { transform: translate(-1px, 0); }
+  80% { transform: translate(1px, 0); }
+}
+
+.home-footer {
+  margin-top: 50px;
+  font-size: 0.6rem;
+  color: rgba(200,200,200,0.15);
+  letter-spacing: 0.2em;
+}
+
+/* ============ OVERLAY SCREENS ============ */
+.overlay-content {
+  position: relative; z-index: 10;
+  max-width: 800px; width: 90%;
+  padding: 40px;
+}
+
+.overlay-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 700;
+  color: var(--bright);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+.overlay-title::before,
+.overlay-title::after {
+  content: attr(data-text);
+  position: absolute; inset: 0;
+  background: var(--bg);
+}
+.overlay-title::before { color: var(--glitch1); animation: glitch-1 3s infinite; clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%); }
+.overlay-title::after { color: var(--glitch2); animation: glitch-2 3s infinite; clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%); }
+
+/* HOW TO PLAY */
+.howto-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 20px;
+  margin-bottom: 30px;
+}
+@media (max-width: 600px) { .howto-grid { grid-template-columns: 1fr; } }
+
+.howto-section {
+  border: 1px solid rgba(255,0,34,0.2);
+  padding: 20px;
+  text-align: center;
+  background: rgba(255,0,34,0.02);
+}
+.howto-icon { font-size: 2rem; margin-bottom: 8px; }
+.howto-label {
+  font-size: 0.8rem; color: var(--red);
+  letter-spacing: 0.2em; margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.howto-desc { font-size: 0.8rem; line-height: 1.6; color: var(--text); }
+.highlight { color: var(--warn); font-weight: bold; }
+
+.controls-section { margin-bottom: 30px; }
+.controls-title {
+  font-size: 0.8rem; color: var(--red);
+  letter-spacing: 0.3em; margin-bottom: 16px;
+  text-align: center;
+}
+.controls-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 10px;
+}
+.ctrl {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px; padding: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.key {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  color: var(--bright);
+  letter-spacing: 0.1em;
+}
+.ctrl-desc { font-size: 0.7rem; color: var(--text); opacity: 0.7; }
+
+/* CREDITS */
+.credits-list { margin-bottom: 30px; }
+.credit-item {
+  display: flex; gap: 20px; padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.credit-role {
+  min-width: 180px; font-size: 0.7rem;
+  color: var(--red); letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.credit-name { font-size: 0.85rem; color: var(--text); }
+.credit-warn { color: var(--warn); font-size: 0.75rem; }
+.credits-easter {
+  font-size: 0.6rem; color: rgba(255,255,255,0.05);
+  text-align: center; margin-bottom: 20px;
+  letter-spacing: 0.2em;
+  transition: color 0.3s;
+}
+.credits-easter:hover { color: var(--red); }
+
+.back-btn {
+  display: block; margin: 0 auto;
+}
+
+/* ============ GAME SCREEN ============ */
+#game-screen { background: #000; }
+#game-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+}
+
+/* HUD */
+#hud {
+  position: absolute; top: 20px; left: 20px;
+  z-index: 20; display: flex; flex-direction: column; gap: 12px;
+}
+.hud-label {
+  font-size: 0.6rem; letter-spacing: 0.3em;
+  color: rgba(200,200,200,0.4); margin-bottom: 4px;
+  text-transform: uppercase;
+}
+#key-indicators { display: flex; gap: 8px; }
+.key-slot {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(255,0,34,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; opacity: 0.2;
+  transition: all 0.3s;
+}
+.key-slot.collected {
+  opacity: 1;
+  border-color: var(--warn);
+  box-shadow: 0 0 8px var(--warn);
+  animation: key-glow 1.5s ease-in-out infinite;
+}
+@keyframes key-glow {
+  0%,100% { box-shadow: 0 0 8px var(--warn); }
+  50% { box-shadow: 0 0 20px var(--warn), 0 0 40px rgba(255,102,0,0.3); }
+}
+
+#stamina-bar-wrap { }
+#stamina-bar, #sanity-bar {
+  width: 120px; height: 4px;
+  background: #1a0000;
+  border: 1px solid rgba(255,0,34,0.2);
+}
+#stamina-fill {
+  height: 100%; width: 100%;
+  background: linear-gradient(90deg, #004400, var(--green));
+  transition: width 0.1s;
+}
+#sanity-fill {
+  height: 100%; width: 100%;
+  background: linear-gradient(90deg, #440000, var(--red));
+  transition: width 0.5s;
+}
+
+/* MINIMAP — pojok kanan ATAS layar */
+#minimap-container {
+  position: absolute; top: 20px; right: 20px;
+  z-index: 20;
+}
+#minimap-canvas {
+  border: 1px solid rgba(255,0,34,0.3);
+  background: rgba(0,0,0,0.8);
+  display: block;
+}
+.minimap-label {
+  font-size: 0.55rem; color: rgba(255,0,34,0.5);
+  letter-spacing: 0.3em; text-align: center;
+  margin-top: 4px; text-transform: uppercase;
+}
+
+/* CROSSHAIR */
+#crosshair {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem; color: rgba(255,255,255,0.4);
+  z-index: 20; pointer-events: none;
+  text-shadow: 0 0 4px rgba(255,0,34,0.5);
+}
+
+/* INTERACT PROMPT */
+#interact-prompt {
+  position: absolute; bottom: 30%; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.7);
+  border: 1px solid rgba(255,200,0,0.5);
+  color: var(--warn);
+  padding: 8px 20px;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  z-index: 20;
+}
+
+/* GHOST WARNING */
+#ghost-warning {
+  position: absolute; top: 30%; left: 50%;
+  transform: translateX(-50%);
+  z-index: 30; pointer-events: none;
+}
+.warning-text {
+  color: var(--red);
+  font-size: 1.2rem;
+  letter-spacing: 0.4em;
+  animation: warn-pulse 0.5s ease-in-out infinite;
+  text-shadow: 0 0 20px var(--red);
+}
+@keyframes warn-pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.97); }
+}
+
+/* VIGNETTE */
+#vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.7) 100%);
+  pointer-events: none; z-index: 15;
+}
+
+#red-flash {
+  position: absolute; inset: 0;
+  background: rgba(255,0,0,0.3);
+  pointer-events: none; z-index: 25;
+  animation: flash-anim 0.1s ease-out;
+}
+@keyframes flash-anim {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+#scanlines-game {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 16;
+  opacity: 0.3;
+}
+
+/* PAUSE MENU */
+#pause-menu {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+}
+.pause-content { text-align: center; }
+.pause-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 4rem; font-weight: 700;
+  color: var(--bright);
+  letter-spacing: 0.5em;
+  margin-bottom: 40px;
+  position: relative;
+}
+.pause-title::before,.pause-title::after {
+  content: attr(data-text);
+  position: absolute; inset: 0;
+  background: transparent;
+}
+.pause-title::before { color: var(--glitch1); animation: glitch-1 2s infinite; clip-path: polygon(0 0,100% 0,100% 35%,0 35%); }
+.pause-title::after { color: var(--glitch2); animation: glitch-2 2s infinite; clip-path: polygon(0 65%,100% 65%,100% 100%,0 100%); }
+#pause-menu .menu-container { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+
+/* END GAME SCREENS */
+#caught-screen, #win-screen {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+}
+.endgame-content { text-align: center; padding: 40px; }
+.endgame-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin-bottom: 20px;
+}
+.blood-title {
+  color: var(--red);
+  text-shadow: 0 0 30px var(--red), 0 0 60px rgba(255,0,0,0.4);
+  animation: glitch-main 1s infinite;
+}
+.win-title {
+  color: var(--bright);
+  animation: glitch-main 2s infinite;
+}
+.endgame-msg {
+  font-size: 1rem; color: var(--text);
+  letter-spacing: 0.2em; margin-bottom: 8px;
+}
+.endgame-msg.small { font-size: 0.75rem; opacity: 0.5; margin-bottom: 40px; }
+.endgame-content .menu-btn { margin: 8px; }
+.win-content { }
+
+/* POINTER LOCK */
+#pointer-lock-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+#pointer-lock-overlay.hidden {
+  pointer-events: none;
+}
+.pointer-content { text-align: center; pointer-events: none; }
+.pointer-title {
+  font-size: 1.5rem; color: var(--bright);
+  letter-spacing: 0.3em; margin-bottom: 12px;
+  animation: flicker 2s infinite;
+}
+.pointer-sub { font-size: 0.8rem; color: var(--text); opacity: 0.5; letter-spacing: 0.2em; }
+
+/* UTILITIES */
+.hidden { display: none !important; }
+
+/* HORROR EFFECT - screen shake */
+@keyframes screen-shake {
+  0%,100% { transform: none; }
+  20% { transform: translate(-3px, 2px) rotate(-0.5deg); }
+  40% { transform: translate(3px, -2px) rotate(0.5deg); }
+  60% { transform: translate(-2px, -3px); }
+  80% { transform: translate(2px, 3px); }
+}
+.shaking { animation: screen-shake 0.3s ease-in-out; }
+
+/* GHOST SPRITE */
+.ghost-overlay {
+  position: absolute; pointer-events: none; z-index: 40;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--dark-red); }
+
+/* ============ MOBILE TOUCH CONTROLS ============ */
+#touch-controls {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none; /* children override */
+  touch-action: none;
+}
+
+/* Joystick base area (bottom-left) */
+#joystick-area {
+  position: absolute;
+  bottom: 40px;
+  left: 30px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(255,0,34,0.08);
+  border: 2px solid rgba(255,0,34,0.25);
+  pointer-events: all;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#joystick-base {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.3);
+}
+#joystick-knob {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,0,34,0.55);
+  border: 2px solid rgba(255,80,80,0.7);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px rgba(255,0,34,0.4);
+  transition: background 0.1s;
+}
+
+/* Look / swipe area (right two-thirds of screen) */
+#look-area {
+  position: absolute;
+  top: 0; right: 0;
+  width: 60%;
+  height: 100%;
+  pointer-events: all;
+  touch-action: none;
+}
+
+/* Mobile action buttons */
+.mobile-btn {
+  position: absolute;
+  background: rgba(0,0,0,0.5);
+  border: 2px solid rgba(255,0,34,0.4);
+  color: #ccc;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  border-radius: 50%;
+  width: 60px; height: 60px;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: all;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  cursor: pointer;
+  transition: background 0.1s, box-shadow 0.1s;
+}
+.mobile-btn:active {
+  background: rgba(255,0,34,0.25);
+  box-shadow: 0 0 14px rgba(255,0,34,0.5);
+}
+
+#btn-run-mobile {
+  bottom: 120px;
+  right: 30px;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+}
+.mobile-btn-action {
+  bottom: 40px;
+  right: 30px;
+  font-size: 1.3rem;
+  border-color: rgba(255,200,0,0.5);
+  color: #ffcc00;
+}
+.mobile-btn-pause {
+  top: 20px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: 44px; height: 44px;
+  font-size: 1rem;
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* ============ MOBILE LAYOUT FIXES ============ */
+@media (max-width: 600px) {
+  /* Smaller minimap on mobile */
+  #minimap-canvas {
+    width: 100px !important;
+    height: 100px !important;
+  }
+  #minimap-container {
+    top: 12px;
+    right: 12px;
+  }
+
+  /* HUD adjustments */
+  #hud {
+    top: 12px;
+    left: 12px;
+    gap: 8px;
+  }
+  .key-slot {
+    width: 28px; height: 28px;
+    font-size: 0.9rem;
+  }
+  #stamina-bar, #sanity-bar {
+    width: 90px;
+  }
+
+  /* Hide crosshair on mobile */
+  #crosshair { display: none; }
+
+  /* Bigger interact prompt for touch */
+  #interact-prompt {
+    font-size: 1rem;
+    padding: 12px 24px;
+    bottom: 35%;
+  }
+
+  /* Ghost warning bigger */
+  .warning-text { font-size: 1.6rem; }
+
+  /* Menu adjustments */
+  .menu-container { gap: 14px; }
+  .menu-btn { font-size: 0.85rem; padding: 12px 24px; }
+  .home-tagline { font-size: 0.65rem; }
+  .overlay-content { padding: 20px; }
+  .controls-grid { grid-template-columns: repeat(2,1fr); gap: 8px; }
+}
+
+@media (max-width: 400px) {
+  .glitch-title { font-size: clamp(1.8rem, 10vw, 3rem); }
+  .home-title.glitch-title-big { font-size: clamp(2rem, 11vw, 4rem); }
+}
+
+/* Prevent body scroll/bounce on iOS */
+body { -webkit-overflow-scrolling: touch; overscroll-behavior: none; }
+
+/* Touch-friendly buttons */
+.menu-btn { min-height: 44px; }
+
+/* ============ NOTCH / SAFE-AREA SUPPORT (mobile) ============ */
+@supports (padding: max(0px)) {
+  #hud {
+    top: max(12px, env(safe-area-inset-top));
+    left: max(12px, env(safe-area-inset-left));
+  }
+  #minimap-container {
+    top: max(12px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
+  }
+  #joystick-area {
+    bottom: max(40px, calc(env(safe-area-inset-bottom) + 24px));
+    left: max(30px, calc(env(safe-area-inset-left) + 16px));
+  }
+  #btn-run-mobile {
+    right: max(30px, calc(env(safe-area-inset-right) + 16px));
+  }
+  .mobile-btn-action {
+    right: max(30px, calc(env(safe-area-inset-right) + 16px));
+  }
+  .mobile-btn-pause {
+    top: max(20px, env(safe-area-inset-top));
+  }
+}
+
+/* ============ MOBILE LANDSCAPE (phones, short viewport height) ============ */
+@media (max-height: 480px) and (orientation: landscape) {
+  #joystick-area { bottom: 16px; left: 16px; width: 90px; height: 90px; }
+  #joystick-knob { width: 36px; height: 36px; }
+  #btn-run-mobile { bottom: 74px; right: 16px; width: 50px; height: 50px; font-size: 0.6rem; }
+  .mobile-btn-action { bottom: 16px; right: 16px; width: 54px; height: 54px; font-size: 1.1rem; }
+  .mobile-btn-pause { top: 10px; left: 50%; right: auto; transform: translateX(-50%); width: 38px; height: 38px; }
+
+  #minimap-container { top: 8px; right: 8px; }
+  #minimap-canvas { width: 80px !important; height: 80px !important; }
+
+  #hud { top: 8px; left: 8px; gap: 6px; }
+  .key-slot { width: 24px; height: 24px; font-size: 0.8rem; }
+  #stamina-bar, #sanity-bar { width: 70px; }
+
+  #interact-prompt { bottom: 20%; font-size: 0.85rem; padding: 8px 18px; }
+  .warning-text { font-size: 1.2rem; }
+
+  /* Menus need to fit in the shorter viewport too */
+  .overlay-content, .pause-content, .endgame-content { padding: 12px; max-height: 92vh; overflow-y: auto; }
+  .menu-container { gap: 8px; }
+  .menu-btn { padding: 8px 18px; font-size: 0.8rem; min-height: 36px; }
+  .home-content { gap: 6px; }
+}
+
+/* Small tablets in portrait: touch controls should not feel cramped */
+@media (min-width: 601px) and (max-width: 900px) {
+  #joystick-area { width: 130px; height: 130px; }
+  #joystick-knob { width: 52px; height: 52px; }
+  .mobile-btn { width: 70px; height: 70px; }
+}
